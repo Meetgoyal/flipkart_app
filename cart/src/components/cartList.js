@@ -10,10 +10,10 @@ const CartList = () => {
         navigate('/final');
     }
     const cartData = useSelector(state => state.cartlist.items);
-    const Total_price = useSelector(state => state.cartlist.total_price);
+    const Total_price = Math.floor(useSelector(state => state.cartlist.total_price));
     const productList = useSelector(state => state.products.list);
     const DisList = useSelector(state => state.cartlist.discount);
-    let final_discount = useSelector(state => state.cartlist.total_discount);
+    let final_discount = Math.floor(useSelector(state => state.cartlist.total_discount));
     const dispatch = useDispatch();
     const getProduct = (ProductId) => {
         return productList.find(product => Number(product.id) === Number(ProductId));
