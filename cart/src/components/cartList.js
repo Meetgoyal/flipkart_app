@@ -13,7 +13,6 @@ const CartList = () => {
     const Total_price = Math.floor(useSelector(state => state.cartlist.total_price));
     const productList = useSelector(state => state.products.list);
     const DisList = useSelector(state => state.cartlist.discount);
-    const isLogin = useSelector(state => state.products.isLogin);
     let final_discount = Math.floor(useSelector(state => state.cartlist.total_discount));
     const dispatch = useDispatch();
     const getProduct = (ProductId) => {
