@@ -15,6 +15,7 @@ const CartList = () => {
     const DisList = useSelector(state => state.cartlist.discount);
     let final_discount = Math.floor(useSelector(state => state.cartlist.total_discount));
     const dispatch = useDispatch();
+    const isLogin = useSelector(state => state.products.isLogin);
     const getProduct = (ProductId) => {
         return productList.find(product => Number(product.id) === Number(ProductId));
     }
