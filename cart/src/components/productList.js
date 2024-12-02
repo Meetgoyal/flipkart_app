@@ -6,7 +6,9 @@ import { increaseQuantity, decreaseQuantity, changeQuantity, addDiscount, addToC
 const ProductList = () => {
     const productsData = useSelector(state => state.products.list);
     const cartData = useSelector(state => state.cartlist.items);
+    const isLogin = useSelector(state => state.products.isLogin);
     const dispatch = useDispatch();
+    console.log(isLogin);
     let discount = 0;
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')

@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom"
 import { loginUser } from "../apicalls/user";
 import {message,success} from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import { changeLogin } from "../reducers/ProductListReducer";
 const LoginPage = () => {
+    var isLogin = useSelector(state => state.products.isLogin);
+    const dispatch = useDispatch();
     const navigate =useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -23,6 +27,7 @@ const LoginPage = () => {
         try {
             const res = await loginUser(formData);
             if(res.success){
+                dispatch(changeLogin());
                 message.success(res.message);
                 navigate('/');
             }

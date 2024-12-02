@@ -1,18 +1,23 @@
 import { Outlet, Link } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
-import { setProducts } from "../reducers/ProductListReducer";
+import { changeLogin, setProducts } from "../reducers/ProductListReducer";
 import { useEffect, useState } from "react";
 const Header = () => {
     const dispatch = useDispatch();
     const productList = useSelector(state => state.products.list);
+    const isLogin = useSelector(state => state.products.isLogin);
     const handleSearch = (e) => {
         const text = e.target.value;
-        if(text === ""){
+        if (text === "") {
             window.location.reload(true);
         }
-        else{
-        dispatch(setProducts(productList.filter(product => product.title.toLowerCase().includes(text))))
+        else {
+            dispatch(setProducts(productList.filter(product => product.title.toLowerCase().includes(text))))
         }
+    }
+
+    const handleLogout = () => {
+        dispatch(changeLogin());
     }
     return (
         <header class="bg-blue-500 text-white shadow-lg">
@@ -33,7 +38,7 @@ const Header = () => {
 
                 {/* <!-- Account and Cart Section --> */}
                 <div class="flex items-center space-x-6">
-                    <Link to="/login"><button class="text-white font-semibold">Login</button></Link> 
+                    {isLogin ? <button class="text-white font-semibold" onClick={handleLogout}>Logout</button> : <Link to="/login"><button class="text-white font-semibold">Login</button></Link>}
                     <div class="relative">
                         <button class="flex items-center space-x-1">
                             <Link to="/cart"><img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/header_cart-eed150.svg" /></Link>
@@ -43,11 +48,6 @@ const Header = () => {
                 </div>
             </div>
         </header>
-        // {/* // <div className="bg-blue-500 text-white shadow-lg container mx-auto px-4 py-3 flex items-center gap-5">
-
-        // //     <Link to="/"><span>Products</span></Link>
-        // //     <Link to="/cart"><span className="flex items-center space-x-1">Cart</span></Link>
-        // // </div> */}
     )
 }
 export default Header;

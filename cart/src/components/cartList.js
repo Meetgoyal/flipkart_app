@@ -10,10 +10,11 @@ const CartList = () => {
         navigate('/final');
     }
     const cartData = useSelector(state => state.cartlist.items);
-    const Total_price = useSelector(state => state.cartlist.total_price);
+    const Total_price = Math.floor(useSelector(state => state.cartlist.total_price));
     const productList = useSelector(state => state.products.list);
     const DisList = useSelector(state => state.cartlist.discount);
-    let final_discount = useSelector(state => state.cartlist.total_discount);
+    const isLogin = useSelector(state => state.products.isLogin);
+    let final_discount = Math.floor(useSelector(state => state.cartlist.total_discount));
     const dispatch = useDispatch();
     const getProduct = (ProductId) => {
         return productList.find(product => Number(product.id) === Number(ProductId));
@@ -88,9 +89,12 @@ const CartList = () => {
                             <span>{(Total_price - final_discount) > 0 ? (Total_price - final_discount) : 0}</span>
                         </div>
                     </div>
-                    <StripeCheckout token={onToken} currency='INR' amount={(Total_price - final_discount)*100 > 0 ? (Total_price - final_discount)*100 : 0} stripeKey='pk_test_51QRDITRp2vso8K5A1yz6HziVSgFXEtArYsHD5kroIdaIxX0IsB6qgDxXVqVPTY7FEhAeValiD3gXnD0LBtFoptc200kGlbeX5X'><button class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition duration-300">
-                        Pay
-                    </button></StripeCheckout>
+                    {isLogin ?
+                        <StripeCheckout token={onToken} currency='INR' amount={(Total_price - final_discount) * 100 > 0 ? (Total_price - final_discount) * 100 : 0} stripeKey='pk_test_51QRDITRp2vso8K5A1yz6HziVSgFXEtArYsHD5kroIdaIxX0IsB6qgDxXVqVPTY7FEhAeValiD3gXnD0LBtFoptc200kGlbeX5X'><button class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition duration-300">
+                            Pay
+                        </button></StripeCheckout> : <Link to={"/login"}><button class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded transition duration-300">
+                            Proceed
+                        </button></Link>}
                 </div>
             </div>
         </div>
